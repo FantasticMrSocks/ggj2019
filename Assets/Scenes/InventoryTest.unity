@@ -144,10 +144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ef372b29c0bfd84294b482f1a56f252, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
   piper_collider: {fileID: 1690460541}
   collectable: 0
 --- !u!61 &806251616
@@ -271,6 +267,7 @@ GameObject:
   - component: {fileID: 1690460542}
   - component: {fileID: 1690460541}
   - component: {fileID: 1690460544}
+  - component: {fileID: 1690460545}
   m_Layer: 0
   m_Name: Test Piper
   m_TagString: Untagged
@@ -366,6 +363,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 70cd6b6a35eeb8e4f9b9326542444b4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1690460545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690460540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee38bc84747c3c34fa0ee40cb5d3490c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1756385713
