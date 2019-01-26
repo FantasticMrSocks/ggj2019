@@ -20,7 +20,7 @@ public class Piper : MonoBehaviour
     }
     void Start()
     {
-        
+        Debug.Log("Piper loaded");
     }
 
     // Update is called once per frame
@@ -44,5 +44,29 @@ public class Piper : MonoBehaviour
             rb2D.AddForce(new Vector2(0f, jumpForce));
             jump = false;
         }
+
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Stick")
+        {
+            Debug.Log("Yep, that's a stick");
+            collision.gameObject.SendMessage("Become_Collectable");
+        }
+
+        //if (collision.relativeVelocity.magnitude > 2)
+        //    audioSource.Play();
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Stick")
+        {
+            collision.gameObject.SendMessage("Become_Uncollectable");
+        }
+
+        //if (collision.relativeVelocity.magnitude > 2)
+        //    audioSource.Play();
     }
 }
