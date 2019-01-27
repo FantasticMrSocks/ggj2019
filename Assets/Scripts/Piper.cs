@@ -12,6 +12,7 @@ public class Piper : MonoBehaviour
     public float jumpForce = 1000f;
     public float maxSpeed = 5f;
     public float moveForce = 365f;
+    public float decel = 0.75f;
     [HideInInspector] public bool jump = false;
     // Start is called before the first frame update
 
@@ -33,7 +34,8 @@ public class Piper : MonoBehaviour
     }
     void FixedUpdate()
     {
-        float h = Input.GetAxis("Horizontal");
+        float hRaw = Input.GetAxisRaw("Horizontal");
+        float h = (hRaw == 0 ? hRaw : Input.GetAxis("Horizontal"));
         if (h * rb2D.velocity.x < maxSpeed)
             rb2D.AddForce(Vector2.right * h * moveForce);
 
@@ -43,6 +45,10 @@ public class Piper : MonoBehaviour
         if (jump) {
             rb2D.AddForce(new Vector2(0f, jumpForce));
             jump = false;
+        }
+
+        if (h == 0) {
+            rb2D.velocity = new Vector2(rb2D.velocity.x * decel, rb2D.velocity.y);
         }
 
     }
