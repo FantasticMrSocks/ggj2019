@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+
+    public SpriteRenderer background;
     Stack<GameObject> collected_sticks;
     GameObject[] found_sticks;
 
@@ -25,7 +27,7 @@ public class Inventory : MonoBehaviour
             current_placing_stick.SetActive(true);
             current_placing_stick.GetComponent<Collider2D>().enabled = false;
             current_placing_stick.GetComponent<Rigidbody2D>().gravityScale = 0;
-            current_placing_stick.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+            current_placing_stick.transform.position = new Vector3(UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition).x, UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
         }
         else
         {
@@ -40,7 +42,7 @@ public class Inventory : MonoBehaviour
         {
             if(current_placing_stick != null)
             {
-                current_placing_stick.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+                current_placing_stick.transform.position = new Vector3(UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition).x, UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
                 var d = Input.GetAxis("Mouse ScrollWheel");
                 current_placing_stick.transform.Rotate(0f, 0f, d * 20);
                 if(Input.GetMouseButtonDown(1))
@@ -73,14 +75,16 @@ public class Inventory : MonoBehaviour
                     s.GetComponent<Rigidbody2D>().gravityScale = 1;
                 }
                 placed_sticks.Clear();
+                background.color = Color.white;
             }
             else
             {
                 //Enter build mode:
                 // If we have a stick, spawn it at the mouse
-                
-                    Debug.Log("Entered build mode, placing stick at curosr");
-                    PrepareStickForPlacement();
+                Debug.Log("Entered build mode, placing stick at curosr");
+                PrepareStickForPlacement();
+                background.color = new Color(.6f, .6f, .6f);
+               
             }
 
             in_build_mode = !in_build_mode;
