@@ -21,6 +21,8 @@ public class Piper : MonoBehaviour
     void Awake() {
         rb2D = GetComponent<Rigidbody2D>();
     }
+    
+    // Start is called before the first frame update
     void Start()
     {
         Debug.Log("Piper loaded");
@@ -72,6 +74,11 @@ public class Piper : MonoBehaviour
         {
             Debug.Log("Yep, that's a stick");
             collision.gameObject.SendMessage("Become_Collectable");
+        }
+
+        if (collision.gameObject.tag == "Camera Zone") {
+            Debug.Log("Entering " + collision.gameObject.name);
+            UnityEngine.Camera.main.GetComponent<Camera>().currentZone = collision.gameObject;            
         }
 
         //if (collision.relativeVelocity.magnitude > 2)
