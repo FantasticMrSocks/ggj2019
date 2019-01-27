@@ -15,6 +15,7 @@ public class Piper : MonoBehaviour
     public float decel = 0.75f;
     [HideInInspector] public bool jump = false;
     [HideInInspector] public bool buildMode = false;
+    public Animator animator;
     // Start is called before the first frame update
 
     void Awake() {
@@ -31,6 +32,7 @@ public class Piper : MonoBehaviour
         //grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
         if (Input.GetButtonDown("Jump") && !buildMode){ //&& grounded) {
             jump = true;
+            animator.SetBool("Grounded", false);
         }
     }
     void FixedUpdate()
@@ -45,6 +47,8 @@ public class Piper : MonoBehaviour
             if (Mathf.Abs(rb2D.velocity.x) > maxSpeed)
                 rb2D.velocity = new Vector2(Mathf.Sign(rb2D.velocity.x) * maxSpeed, rb2D.velocity.y);
 
+            animator.SetFloat("Speed", Mathf.Abs(rb2D.velocity.x));
+
             if (jump)
             {
                 rb2D.AddForce(new Vector2(0f, jumpForce));
@@ -53,6 +57,10 @@ public class Piper : MonoBehaviour
             if (h == 0)
             {
                 rb2D.velocity = new Vector2(rb2D.velocity.x * decel, rb2D.velocity.y);
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().flipX = h < 0;
             }
         }
         
@@ -84,5 +92,6 @@ public class Piper : MonoBehaviour
     void SetBuildMode(bool newValue)
     {
         buildMode = newValue;
+        animator.SetBool("Build", buildMode);
     }
 }
