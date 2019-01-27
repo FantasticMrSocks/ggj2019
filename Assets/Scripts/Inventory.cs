@@ -49,9 +49,8 @@ public class Inventory : MonoBehaviour
                     PrepareStickForPlacement();
                 }
             }
-            //Mouse rotate? Rotate the current stick
-
-            // Right click? Place the current stick in Physics Off mode
+            
+            //Left click? 
         }
 
 
