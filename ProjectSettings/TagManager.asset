@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Stick
   - Camera Zone
+  - Build Zone
   layers:
   - Default
   - TransparentFX

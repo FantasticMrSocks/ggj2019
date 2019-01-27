@@ -39,8 +39,8 @@ public class Piper : MonoBehaviour
             //animator.SetBool("Grounded", false);
         }
 
-        if (Input.GetKeyDown("T") && !buildMode && inBuildZone) {
-            // do the thing where we deposit the sticks
+        if (Input.GetKeyDown("t") && !buildMode && inBuildZone) {
+            checkHouse();
         }
     }
     void FixedUpdate()
@@ -87,8 +87,10 @@ public class Piper : MonoBehaviour
             UnityEngine.Camera.main.GetComponent<Camera>().currentZone = collision.gameObject;            
         }
 
-        if (collision.gameObject.tag == "Build Zone")
+        if (collision.gameObject.tag == "Build Zone") {
             inBuildZone = true;
+            Debug.Log("In Build Zone");
+        }
 
         //if (collision.relativeVelocity.magnitude > 2)
         //    audioSource.Play();
