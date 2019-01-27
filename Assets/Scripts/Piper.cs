@@ -13,6 +13,7 @@ public class Piper : MonoBehaviour
     public float maxSpeed = 5f;
     public float moveForce = 365f;
     [HideInInspector] public bool jump = false;
+    [HideInInspector] public bool buildMode = false;
     // Start is called before the first frame update
 
     void Awake() {
@@ -27,24 +28,27 @@ public class Piper : MonoBehaviour
     void Update()
     {
         //grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
-        if (Input.GetButtonDown("Jump")){ //&& grounded) {
+        if (Input.GetButtonDown("Jump") && !buildMode){ //&& grounded) {
             jump = true;
         }
     }
     void FixedUpdate()
     {
-        float h = Input.GetAxis("Horizontal");
-        if (h * rb2D.velocity.x < maxSpeed)
-            rb2D.AddForce(Vector2.right * h * moveForce);
+        if (!buildMode)
+        { 
+            float h = Input.GetAxis("Horizontal");
+            if (h * rb2D.velocity.x < maxSpeed)
+                rb2D.AddForce(Vector2.right * h * moveForce);
 
-        if (Mathf.Abs (rb2D.velocity.x) > maxSpeed)
-            rb2D.velocity = new Vector2(Mathf.Sign (rb2D.velocity.x) * maxSpeed, rb2D.velocity.y);
-        
-        if (jump) {
-            rb2D.AddForce(new Vector2(0f, jumpForce));
-            jump = false;
+            if (Mathf.Abs(rb2D.velocity.x) > maxSpeed)
+                rb2D.velocity = new Vector2(Mathf.Sign(rb2D.velocity.x) * maxSpeed, rb2D.velocity.y);
+
+            if (jump)
+            {
+                rb2D.AddForce(new Vector2(0f, jumpForce));
+                jump = false;
+            }
         }
-
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -68,5 +72,10 @@ public class Piper : MonoBehaviour
 
         //if (collision.relativeVelocity.magnitude > 2)
         //    audioSource.Play();
+    }
+
+    void SetBuildMode(bool newValue)
+    {
+        buildMode = newValue;
     }
 }
