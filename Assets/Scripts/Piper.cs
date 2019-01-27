@@ -8,14 +8,16 @@ public class Piper : MonoBehaviour
     List<GameObject> sticks;
     private Rigidbody2D rb2D;
     private bool grounded = false;
+    private bool inBuildZone = false;
     public Transform groundCheck;
     public float jumpForce = 1000f;
     public float maxSpeed = 5f;
     public float moveForce = 365f;
     public float decel = 0.75f;
+    private int sticksInHouse = 0;
     [HideInInspector] public bool jump = false;
     [HideInInspector] public bool buildMode = false;
-    public Animator animator;
+    //public Animator animator;
     // Start is called before the first frame update
 
     void Awake() {
@@ -34,7 +36,11 @@ public class Piper : MonoBehaviour
         //grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
         if (Input.GetButtonDown("Jump") && !buildMode){ //&& grounded) {
             jump = true;
-            animator.SetBool("Grounded", false);
+            //animator.SetBool("Grounded", false);
+        }
+
+        if (Input.GetKeyDown("T") && !buildMode && inBuildZone) {
+            // do the thing where we deposit the sticks
         }
     }
     void FixedUpdate()
@@ -49,7 +55,7 @@ public class Piper : MonoBehaviour
             if (Mathf.Abs(rb2D.velocity.x) > maxSpeed)
                 rb2D.velocity = new Vector2(Mathf.Sign(rb2D.velocity.x) * maxSpeed, rb2D.velocity.y);
 
-            animator.SetFloat("Speed", Mathf.Abs(rb2D.velocity.x));
+            //animator.SetFloat("Speed", Mathf.Abs(rb2D.velocity.x));
 
             if (jump)
             {
@@ -81,6 +87,9 @@ public class Piper : MonoBehaviour
             UnityEngine.Camera.main.GetComponent<Camera>().currentZone = collision.gameObject;            
         }
 
+        if (collision.gameObject.tag == "Build Zone")
+            inBuildZone = true;
+
         //if (collision.relativeVelocity.magnitude > 2)
         //    audioSource.Play();
     }
@@ -92,6 +101,9 @@ public class Piper : MonoBehaviour
             collision.gameObject.SendMessage("Become_Uncollectable");
         }
 
+        if (collision.gameObject.tag == "Build Zone")
+            inBuildZone = false;
+
         //if (collision.relativeVelocity.magnitude > 2)
         //    audioSource.Play();
     }
@@ -99,6 +111,16 @@ public class Piper : MonoBehaviour
     void SetBuildMode(bool newValue)
     {
         buildMode = newValue;
-        animator.SetBool("Build", buildMode);
+        //animator.SetBool("Build", buildMode);
+    }
+
+    void checkHouse() {
+        sticksInHouse = 0;
+        foreach (GameObject stick in GameObject.FindGameObjectsWithTag("Stick")) {
+            if (stick.GetComponent<Stick>().isInBuildZone) {
+                sticksInHouse++;
+            }
+        }
+        Debug.Log("There are " + sticksInHouse + " sticks in the house.");
     }
 }

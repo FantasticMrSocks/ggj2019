@@ -6,6 +6,7 @@ public class Stick : MonoBehaviour
 {
     public Collider2D piper_collider;
     public bool collectable;
+    [HideInInspector] public bool isInBuildZone = false;
     Color dark_brown;
     Color light_brown;
     // Start is called before the first frame update
@@ -34,5 +35,17 @@ public class Stick : MonoBehaviour
         collectable = false;
         Debug.Log("I, the stick, am no longer collectable");
         GetComponent<SpriteRenderer>().color = dark_brown;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Build Zone")
+            isInBuildZone = true;
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Build Zone")
+            isInBuildZone = false;
     }
 }
