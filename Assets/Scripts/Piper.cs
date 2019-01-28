@@ -9,7 +9,7 @@ public class Piper : MonoBehaviour
     private Rigidbody2D rb2D;
     private bool grounded = false;
     public Transform groundCheck;
-    public float jumpForce = 1000f;
+    public float jumpForce = 100f;
     public float maxSpeed = 5f;
     public float moveForce = 365f;
     public float decel = 0.75f;

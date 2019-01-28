@@ -19,7 +19,7 @@ public class Stick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void Become_Collectable()

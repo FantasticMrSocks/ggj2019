@@ -5,9 +5,9 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
 
-    public SpriteRenderer background;
     Stack<GameObject> collected_sticks;
     GameObject[] found_sticks;
+    GameObject[] backgrounds;
 
     [HideInInspector] public bool in_build_mode = false;
     GameObject current_placing_stick;
@@ -17,6 +17,7 @@ public class Inventory : MonoBehaviour
     {
         collected_sticks = new Stack<GameObject>();
         placed_sticks = new List<GameObject>();
+        backgrounds = GameObject.FindGameObjectsWithTag("Background");
     }
 
     void PrepareStickForPlacement()
@@ -75,7 +76,10 @@ public class Inventory : MonoBehaviour
                     s.GetComponent<Rigidbody2D>().gravityScale = 1;
                 }
                 placed_sticks.Clear();
-                background.color = Color.white;
+                foreach( GameObject b in backgrounds)
+                {
+                    b.GetComponent<SpriteRenderer>().color = Color.white;
+                }
             }
             else
             {
@@ -83,7 +87,10 @@ public class Inventory : MonoBehaviour
                 // If we have a stick, spawn it at the mouse
                 Debug.Log("Entered build mode, placing stick at curosr");
                 PrepareStickForPlacement();
-                background.color = new Color(.6f, .6f, .6f);
+                foreach (GameObject b in backgrounds)
+                {
+                    b.GetComponent<SpriteRenderer>().color = new Color(.6f, .6f, .6f);
+                }
                
             }
 
